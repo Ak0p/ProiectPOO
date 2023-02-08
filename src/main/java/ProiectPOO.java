@@ -1,4 +1,4 @@
-import Misc.Facade;
+import Misc.Database;
 import Misc.RequestHandler;
 
 public class ProiectPOO {
@@ -17,7 +17,7 @@ public class ProiectPOO {
         }
         getFilenames(args);
         RequestHandler.flush();
-        Facade facade = Facade.getInstance();
+        Database.Facade facade = Database.Facade.getInstance();
         facade.setFiles(COMMANDS_FILE, USERS_FILE, STREAMERS_FILE, STREAMS_FILE);
         facade.loadDatabase();
         facade.startParsing();
