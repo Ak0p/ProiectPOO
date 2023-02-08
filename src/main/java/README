@@ -39,7 +39,7 @@ Explicare implementare design patterns:
         > Am folosit Factory pentru a crea obiectele de tip Command
 
     * Iterator
-        * La task-urile cu recommend și surprise am considerat că utilizarea unui iterator
+        > La task-urile cu recommend și surprise am considerat că utilizarea unui iterator
         pentru a traversa map-urile în ordinea dorită este cea mai potrivită soluție.
 
 
