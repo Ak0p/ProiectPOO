@@ -1,12 +1,10 @@
 package Iterators;
 
-import Iterators.LocIterator;
-import Misc.RequestHandler;
 import Misc.Streams;
 
 import java.util.*;
 
-public class SurpriseIterator implements LocIterator{
+public class SurpriseIterator implements LocIterator {
 
     private List<Streams> streams;
     private int index = 0;
@@ -17,7 +15,6 @@ public class SurpriseIterator implements LocIterator{
         for (Map.Entry<Integer, Streams> entry : map.entrySet()) {
             if (Objects.equals(entry.getValue().getStreamType(), type) && !streamersList.contains(entry.getValue().getStreamerId())) {
                 streams.add(entry.getValue());
-                RequestHandler.write("Adaug in lista " + entry.getValue().getId());
             }
         }
         streams.sort((o1, o2) -> {
@@ -32,20 +29,15 @@ public class SurpriseIterator implements LocIterator{
             }
         });
 
-        for (Streams stream : streams) {
-            RequestHandler.write("streams " + stream.getNoOfStreams() + " " + stream.getId() +
-                    " " + stream.getDate() + " " + stream.getNoOfStreams());
-        }
-
     }
 
     @Override
     public boolean hasNext() {
         return index < streams.size();
     }
+
     @Override
     public Object getNext() {
-        RequestHandler.write("index " + index + " id " + streams.get(index).getId());
         return streams.get(index++);
     }
 

@@ -1,11 +1,11 @@
 package Iterators;
 
-import Iterators.LocIterator;
-import Misc.RequestHandler;
-import Misc.Streamer;
 import Misc.Streams;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ReccomendIterator implements LocIterator {
 
@@ -16,20 +16,15 @@ public class ReccomendIterator implements LocIterator {
     public ReccomendIterator(Map<Integer, Streams> map, Integer type, List<Integer> streamersList,
                              List<Integer> listenedStreams) {
         this.index = 0;
-       this.streams = new ArrayList<>();
+        this.streams = new ArrayList<>();
         for (Map.Entry<Integer, Streams> entry : map.entrySet()) {
             if (Objects.equals(entry.getValue().getStreamType(), type) &&
                     streamersList.contains(entry.getValue().getStreamerId())
-            && !listenedStreams.contains(entry.getValue().getId())) {
+                    && !listenedStreams.contains(entry.getValue().getId())) {
                 streams.add(entry.getValue());
-                RequestHandler.write("Adaug in map " + entry.getValue().getId());
             }
         }
         streams.sort((o1, o2) -> o2.getNoOfStreams().compareTo(o1.getNoOfStreams()));
-
-        for (Streams stream : streams) {
-            RequestHandler.write("streams " + stream.getNoOfStreams() + " " + stream.getId());
-        }
 
     }
 
@@ -37,9 +32,9 @@ public class ReccomendIterator implements LocIterator {
     public boolean hasNext() {
         return index < streams.size();
     }
+
     @Override
     public Object getNext() {
-        RequestHandler.write("index " + index);
         return streams.get(index++);
     }
 

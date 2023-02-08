@@ -1,7 +1,5 @@
 package Misc;
 
-import Commands.Command;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -48,9 +46,9 @@ public class Database {
 //                for (int i = 0; i < args.length; i++) {
 //                    Misc.RequestHandler.write(args[i]);
 //                }
-                Streamer streamer = new Streamer(Integer.parseInt(args[0].substring(1, args[0].length()-1)),
-                        Integer.parseInt(args[1].substring(1, args[1].length()-1)),
-                        args[2].substring(1, args[2].length()-1));
+                Streamer streamer = new Streamer(Integer.parseInt(args[0].substring(1, args[0].length() - 1)),
+                        Integer.parseInt(args[1].substring(1, args[1].length() - 1)),
+                        args[2].substring(1, args[2].length() - 1));
                 streamers.put(streamer.getId(), streamer);
             }
         } catch (IOException e) {
@@ -71,14 +69,14 @@ public class Database {
                 for (int i = 8; i < args.length; i++) {
                     args[7] = args[7].concat(",").concat(args[i]);
                 }
-                Streams streams = new Streams(Integer.parseInt(args[0].substring(1, args[0].length()-1)),
-                        Integer.parseInt(args[1].substring(1, args[1].length()-1)),
-                        Integer.valueOf(args[2].substring(1, args[2].length()-1)),
-                        Long.parseLong(args[3].substring(1, args[3].length()-1)),
-                        Integer.parseInt(args[4].substring(1, args[4].length()-1)),
-                        Long.parseLong(args[5].substring(1, args[5].length()-1)),
-                        Long.parseLong(args[6].substring(1, args[6].length()-1)),
-                        args[7].substring(1, args[7].length()-1));
+                Streams streams = new Streams(Integer.parseInt(args[0].substring(1, args[0].length() - 1)),
+                        Integer.parseInt(args[1].substring(1, args[1].length() - 1)),
+                        Integer.valueOf(args[2].substring(1, args[2].length() - 1)),
+                        Long.parseLong(args[3].substring(1, args[3].length() - 1)),
+                        Integer.parseInt(args[4].substring(1, args[4].length() - 1)),
+                        Long.parseLong(args[5].substring(1, args[5].length() - 1)),
+                        Long.parseLong(args[6].substring(1, args[6].length() - 1)),
+                        args[7].substring(1, args[7].length() - 1));
                 streams.setStreamerName(streamers.get(streams.getStreamerId()).getName());
                 this.streams.put(streams.getId(), streams);
             }
@@ -122,11 +120,11 @@ public class Database {
             while ((line = usersReader.readLine()) != null) {
                 String[] args = line.split(",");
                 List<Integer> streamsList = new LinkedList<>();
-                String[] elements = args[2].substring(1, args[2].length()-1).split(" ");
-                for(String stream : elements)
+                String[] elements = args[2].substring(1, args[2].length() - 1).split(" ");
+                for (String stream : elements)
                     streamsList.add(Integer.parseInt(stream));
-                User user = new User(Integer.parseInt(args[0].substring(1, args[0].length()-1)),
-                        args[1].substring(1, args[1].length()-1), streamsList);
+                User user = new User(Integer.parseInt(args[0].substring(1, args[0].length() - 1)),
+                        args[1].substring(1, args[1].length() - 1), streamsList);
                 users.put(user.getId(), user);
             }
         } catch (IOException e) {
@@ -157,62 +155,4 @@ public class Database {
         users.clear();
     }
 
-
-    public static class Facade {
-        private static Facade instance = null;
-
-        private String COMMANDS_FILE;
-        private String USERS_FILE;
-        private String STREAMERS_FILE;
-        private String STREAMS_FILE;
-        private Parser parser;
-        private Database db;
-        private List<Command> commands;
-
-        private String output;
-
-        private Facade() {
-            db = Database.getInstance();
-        }
-
-        public static Facade getInstance() {
-            if (Facade.instance == null) {
-                Facade.instance = new Facade();
-            }
-            return Facade.instance;
-        }
-        public void setFiles(String commandsFile, String usersFile, String streamersFile, String streamsFile) {
-            this.COMMANDS_FILE = commandsFile;
-            this.USERS_FILE = usersFile;
-            this.STREAMERS_FILE = streamersFile;
-            this.STREAMS_FILE = streamsFile;
-        }
-
-        public void loadDatabase() {
-
-            db.loadDatabase(STREAMERS_FILE, STREAMS_FILE, USERS_FILE);
-        }
-
-        public void startParsing() {
-            this.parser = new Parser(COMMANDS_FILE);
-            commands = parser.getCommands();
-            assert commands != null;
-        }
-
-        public void runCommands() {
-            int i = 0;
-            for (Command command : commands) {
-                command.execute();
-    //            Misc.RequestHandler.write("command" + i);
-                i++;
-            }
-            RequestHandler.getInstance().showOutput();
-        }
-
-        public void clean() {
-            db.cleanDatabase();
-            this.commands = new LinkedList<>();
-        }
-
-    }
 }

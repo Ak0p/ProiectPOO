@@ -2,11 +2,9 @@ package Misc;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class Streams implements Comparable {
     private transient Integer streamType;
@@ -16,13 +14,12 @@ public class Streams implements Comparable {
     @SerializedName("id")
     private String idString;
 
-
     private transient Integer streamGenre;
 
 
     private transient Long noOfStreams;
 
-    @SerializedName("noOfListenings")
+    //    @SerializedName("noOfListenings")
     private String noOfListenings;
 
     private transient Integer streamerId;
@@ -50,9 +47,6 @@ public class Streams implements Comparable {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     private String streamerName;
 
@@ -77,14 +71,9 @@ public class Streams implements Comparable {
     }
 
     private String dateToString() {
-//        Date date = new Date(dateAdded * 1000L);
-//        Instant instant = date.toInstant().atZone(ZoneId.of("GMT")).toInstant();
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-//        return formatter.format(instant);
 
-        return Instant.ofEpochMilli(dateAdded * 1000L)
-                .atZone(ZoneId.of("GMT"))
-                .toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        Instant instant = Instant.ofEpochSecond(dateAdded);
+        return instant.atZone(ZoneId.of("GMT")).toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
     private String durationToString() {
@@ -93,7 +82,7 @@ public class Streams implements Comparable {
         long MM = (length % 3600) / 60;
         long SS = length % 60;
         if (HH == 0)
-         timeInHHMMSS =  String.format("%02d:%02d", MM, SS);
+            timeInHHMMSS = String.format("%02d:%02d", MM, SS);
         else
             timeInHHMMSS = String.format("%02d:%02d:%02d", HH, MM, SS);
         return timeInHHMMSS;
@@ -111,29 +100,16 @@ public class Streams implements Comparable {
         this.id = id;
     }
 
-    public Integer getStreamGenre() {
-        return streamGenre;
-    }
-
-    public void setStreamGenre(Integer streamGenre) {
-        this.streamGenre = streamGenre;
-    }
 
     public Long getNoOfStreams() {
         return noOfStreams;
     }
 
-    public void setNoOfStreams(Long noOfStreams) {
-        this.noOfStreams = noOfStreams;
-    }
 
     public Integer getStreamerId() {
         return streamerId;
     }
 
-    public void setStreamerId(Integer streamerId) {
-        this.streamerId = streamerId;
-    }
 
     public Long getLength() {
         return length;
@@ -169,7 +145,7 @@ public class Streams implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return this.getNoOfStreams().compareTo(((Streams)o).getNoOfStreams());
+        return this.getNoOfStreams().compareTo(((Streams) o).getNoOfStreams());
     }
 
 }

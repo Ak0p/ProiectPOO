@@ -1,8 +1,6 @@
 package Misc;
 
-import java.util.Comparator;
-
-public class Streamer{
+public class Streamer {
 
     private Integer streamerType;
 

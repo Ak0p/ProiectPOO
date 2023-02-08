@@ -1,5 +1,4 @@
-import Misc.Database;
-import Misc.RequestHandler;
+import Misc.Facade;
 
 public class ProiectPOO {
 
@@ -9,21 +8,18 @@ public class ProiectPOO {
     private static String COMMANDS_FILE;
 
 
-
     public static void main(String[] args) {
         if (args == null) {
             System.out.println("Nothing to read here");
             return;
         }
         getFilenames(args);
-        RequestHandler.flush();
-        Database.Facade facade = Database.Facade.getInstance();
+        Facade facade = Facade.getInstance();
         facade.setFiles(COMMANDS_FILE, USERS_FILE, STREAMERS_FILE, STREAMS_FILE);
         facade.loadDatabase();
         facade.startParsing();
         facade.runCommands();
         facade.clean();
-        RequestHandler.getInstance().reset();
 
     }
 
@@ -34,13 +30,6 @@ public class ProiectPOO {
         USERS_FILE = folder + args[2];
         COMMANDS_FILE = folder + args[3];
     }
-
-
-
-
-
-
-
 
 
 }

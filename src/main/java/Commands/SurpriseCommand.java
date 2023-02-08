@@ -1,7 +1,5 @@
 package Commands;
 
-import Commands.Command;
-
 public class SurpriseCommand implements Command {
     private Integer userId;
 

@@ -9,22 +9,9 @@ public class ListenCommand implements Command {
         this.streamId = streamId;
     }
 
-public void execute() {
+    public void execute() {
         dbHandler.listen(userId, streamId);
     }
 
-    public static class DeleteCommand implements Command {
 
-        private Integer streamerId;
-        private Integer id;
-
-        public DeleteCommand(Integer streamerId, Integer id) {
-            this.streamerId = streamerId;
-            this.id = id;
-        }
-
-        public void execute() {
-            //TODO: Call dbhandler to delete stream
-        }
-    }
 }

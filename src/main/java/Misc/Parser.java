@@ -1,6 +1,7 @@
 package Misc;
 
-import Commands.*;
+import Commands.Command;
+import Factory.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -11,11 +12,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Parser {
-    private final String commandsFile;
+    private String commandsFile;
 
 
-    public Parser(String fileName) {
+    public static Parser instance = null;
+
+
+    private Parser(String fileName) {
         this.commandsFile = fileName;
+    }
+
+    public static Parser getInstance(String fileName) {
+        if (instance == null) {
+            instance = new Parser(fileName);
+        }
+        return instance;
     }
 
 
@@ -42,51 +53,37 @@ public class Parser {
 
         switch (args[1]) {
             case "ADD":
-                for (int i = 7; i < args.length; i++) {
-                    args[6] += " " + args[i];
-                }
-                command = new AddCommand(Integer.parseInt(args[0]), Integer.parseInt(args[2]),
-                        Integer.parseInt(args[3]), Integer.parseInt(args[4]), Long.parseLong(args[5]), args[6]);
-
+                CreateAddCommand createAddCommand = new CreateAddCommand();
+                command = createAddCommand.createCommand(args);
                 break;
             case "LIST":
-                command = new ListCommand(Integer.parseInt(args[0]));
+                CreateListCommand createListCommand = new CreateListCommand();
+                command = createListCommand.createCommand(args);
                 break;
             case "DELETE":
-                command = new ListenCommand.DeleteCommand(Integer.parseInt(args[0]), Integer.parseInt(args[2]));
+
+                CreateDeleteCommand createDeleteCommand = new CreateDeleteCommand();
+                command = createDeleteCommand.createCommand(args);
 
                 break;
             case "LISTEN":
-               command = new ListenCommand(Integer.parseInt(args[0]), Integer.parseInt(args[2]));
+
+                CreateListenCommand createListenCommand = new CreateListenCommand();
+                command = createListenCommand.createCommand(args);
+
                 break;
             case "RECOMMEND": {
-                int streamType = -1;
-                if (args[2].equals("SONG"))
-                    streamType = 1;
-                else if (args[2].equals("PODCAST"))
-                    streamType = 2;
-                else if (args[2].equals("AUDIOBOOK"))
-                    streamType = 3;
-                else {
-                    assert false;
-                    System.out.println("Invalid stream type");
-                }
-                command = new RecommendCommand(Integer.parseInt(args[0]), streamType);
+
+                CreateRecommendCommand createRecommendCommand = new CreateRecommendCommand();
+                command = createRecommendCommand.createCommand(args);
+
                 break;
             }
             case "SURPRISE": {
-                int streamType = -1;
-                if (args[2].equals("SONG"))
-                    streamType = 1;
-                else if (args[2].equals("PODCAST"))
-                    streamType = 2;
-                else if (args[2].equals("AUDIOBOOK"))
-                    streamType = 3;
-                else {
-                    assert false;
-                    System.out.println("Invalid stream type");
-                }
-                command = new SurpriseCommand(Integer.parseInt(args[0]), streamType);
+
+                CreateSurpriseCommand createSurpriseCommand = new CreateSurpriseCommand();
+                command = createSurpriseCommand.createCommand(args);
+
                 break;
             }
             default:
@@ -102,6 +99,10 @@ public class Parser {
             System.out.println("File not found");
             return null;
         }
+    }
+
+    public void resetInstance() {
+        instance = null;
     }
 
 

@@ -20,7 +20,6 @@ public class AddCommand implements Command {
     }
 
     public void execute() {
-//        Misc.RequestHandler.write("id = " + id);
         Command.dbHandler.add(streamerId, streamType, id, streamGenre, length, name);
     }
 }
