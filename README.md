@@ -3,7 +3,7 @@
 # README PROIECT POO
 
 ## Design Patterns implementate:
-- Singleton
+> Singleton
 - Factory
 - Facade
 - Command
