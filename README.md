@@ -3,9 +3,9 @@
 # README PROIECT POO
 
 ## Design Patterns implementate:
-    * Singleton
-    * Factory
-    * Facade
+    - Singleton
+    - Factory
+    - Facade
     * Command
     * Iterator
 
