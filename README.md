@@ -2,12 +2,12 @@
 
 # README PROIECT POO
 
-## Design Patterns implementate:
-   * Singleton
-   * Factory
-   * Facade
-   * Command
-   * Iterator
+## Design Patterns implementate:  
+     * Singleton
+     * Factory
+     * Facade
+     * Command
+     * Iterator
 
 ## Explicare structura program:
     * ProiectPOO.main face apeluri doar la metodele din clasa Facade
